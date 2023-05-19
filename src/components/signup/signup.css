@@ -1,0 +1,93 @@
+.signwhole{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(-45deg,#a85840, #ad406a, #495db4, #2f977f);
+    background-size: 400% 400%;
+    animation: backgroundAnimation 15s ease infinite;
+}
+
+
+@keyframes backgroundAnimation {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.signcard{
+    width: 60vw;
+    height: 80vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    background: rgba(255, 255, 255, 0.37);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(16.1px);
+    -webkit-backdrop-filter: blur(16.1px);
+    border: 1px solid rgba(255, 255, 255, 0.19);
+}
+
+.signnm{
+      font-size: 2rem;
+      margin: 5px;
+      font-weight: 600;
+      color: black;
+}
+
+.signupputs{
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sp{
+    font-size: 1.7rem;
+    font-weight: 300;
+}
+
+.signbut{
+     width: 40%;
+     height: 50px;
+     border-radius: 5px;
+     border: 1px solid black;
+     margin-top: 20px;
+     margin-bottom: 20px;
+     font-weight: bold;
+     box-shadow: 2px 2px 5px grey;
+}
+
+.signbut:active{
+         box-shadow: 0px 0px 10px grey;
+
+}
+
+.signupp{
+    width: 50%;
+    height: 50px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+    font-size: 1rem;
+}
+
+input{
+    outline: none;
+}
+
+.sig-error{
+    color: red;
+}

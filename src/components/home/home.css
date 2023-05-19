@@ -1,0 +1,11 @@
+.homecon{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.bcon{
+    width: 50vw;
+    margin-left: 30px;
+}
+

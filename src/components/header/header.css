@@ -1,0 +1,61 @@
+header{
+    width: 100vw;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.4px solid grey;
+    background-color: white;
+    /* background-image: linear-gradient(155deg,rgb(0, 255, 217) 100px,rgb(66, 160, 243) 200px); */
+}
+
+.logocon{
+    display: flex;
+    margin-left: 30px;
+    align-items: center;
+    font-size: 18px;
+}
+
+.logo{
+    font-size: 2rem;
+    margin: 5px;
+    font-weight: 600;
+    color: black;
+}
+
+.logo::after{
+    content: "|";
+    font-weight: lighter;
+    color: rgb(0, 0, 0);
+}
+
+.menu{
+    width: 50vw;
+    display: flex;
+    margin-right: 20px;
+    justify-content: flex-end;
+}
+
+.menuitem{
+    height: 20px;
+    width: fit-content;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 15px;
+    color: black;
+}
+
+
+.m3{
+    border: none;
+    border: .5px solid black;
+    cursor: pointer;
+} 
+
+a{
+    text-decoration: none;
+}
+#greet{
+    margin-top: 5px;
+}

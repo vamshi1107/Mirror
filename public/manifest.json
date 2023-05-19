@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Mirror",
+  "name": "Work sharing app",
   "icons": [
     {
       "src": "favicon.ico",

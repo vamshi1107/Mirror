@@ -1,0 +1,47 @@
+.banner {
+  height: 30vh;
+  width: 100vw;
+  background-image: linear-gradient(
+    155deg,
+    rgb(0, 255, 217) 100px,
+    rgb(66, 160, 243) 200px
+  );
+}
+@media screen and (min-width: 1200px) {
+  .sub-page {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 1159px) {
+  .sub-page {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .account-card {
+    width: 25vw;
+    min-width: 300px;
+    height: 70vh;
+    background-color: white;
+    margin-top: -15vh;
+    margin-left: 5vw;
+    border: 0.5px solid grey;
+    border-radius: 2px;
+  }
+}
+
+@media screen and (max-width: 1159px) {
+  .account-card {
+    width: 100vw;
+    height: 20vh;
+    background-color: white;
+  }
+}
+
+.projects-con {
+  flex: 1;
+  height: 150vh;
+}

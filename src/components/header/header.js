@@ -9,18 +9,6 @@ const Header = (props) => {
 
   const context = useContext(appContext);
 
-  useEffect(() => {
-    verify();
-  }, [context.data]);
-
-  const verify = async () => {
-    if (!context.data.login) {
-      navigate("/login");
-    } else {
-      navigate("/");
-    }
-  };
-
   const logout = () => {
     const data = context.data;
     const res = logoutUser();
@@ -32,12 +20,16 @@ const Header = (props) => {
     navigate("/login");
   };
 
+  const getUsername = () => {
+    let username = context?.data?.info?.$id;
+    return username || "";
+  };
+
   return (
     <>
       <header>
         <div className="logocon">
           <a href="/">
-            {" "}
             <div className="logo">Mirror</div>
           </a>
           <div id="greet">Greetings!</div>
@@ -48,8 +40,8 @@ const Header = (props) => {
           </a>
           {context.data.login && (
             <>
-              <a href="myapplication">
-                <div className="menuitem m2">Applications</div>
+              <a href={"/" + getUsername()}>
+                <div className="menuitem m2">Profile</div>
               </a>
               <div className="menuitem m3" onClick={logout}>
                 Logout

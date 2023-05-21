@@ -1,23 +1,16 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
-import Login from "./components/login/login";
-import Signup from "./components/signup/signup";
-import Home from "./components/home/home";
-import AppState from "./context/appState";
+import appContext from "./context/appContext";
+import { useContext } from "react";
+import AppRouter from "./router/approuter";
 
 function App() {
-  return (
-    <>
-      <AppState>
-        <Routes>
-          <Route path="/login" element={<Login></Login>}></Route>
-          <Route path="/signup" element={<Signup></Signup>}></Route>
-          <Route path="/" element={<Home></Home>}></Route>
-          <Route path="/:id" element={<Home></Home>}></Route>
-        </Routes>
-      </AppState>
-    </>
-  );
+  const context = useContext(appContext);
+
+  const isAuth = () => {
+    return context?.data?.login || false;
+  };
+
+  return <div>{AppRouter(isAuth())}</div>;
 }
 
 export default App;

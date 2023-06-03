@@ -1,0 +1,7 @@
+.document {
+  z-index: 55;
+}
+
+.page canvas {
+  margin: 0px auto;
+}

@@ -10,6 +10,7 @@ header {
   -webkit-backdrop-filter: blur(16.1px);
   position: sticky;
   top: 0px;
+  z-index: 999999;
 }
 
 .logocon {

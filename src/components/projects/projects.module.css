@@ -30,4 +30,6 @@
   background-color: white;
   border-radius: 5px;
   border: 0.1px solid grey;
+  user-select: none;
+  cursor: pointer;
 }

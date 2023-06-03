@@ -1,7 +1,7 @@
 import "./login.css";
 import { useRef, useEffect, useContext } from "react";
 import * as Services from "../../services/services";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import appContext from "../../context/appContext";
 
 const Login = () => {
@@ -16,7 +16,12 @@ const Login = () => {
 
   const verify = () => {
     if (context.data.login) {
-      navigate("/");
+      const c = context?.data?.prev;
+      if (c != "") {
+        navigate(c);
+      } else {
+        navigate("/");
+      }
     }
   };
 

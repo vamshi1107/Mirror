@@ -1,13 +1,31 @@
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Header from "../header/header";
 import styles from "./editor.module.css";
 import { Document, Page } from "react-pdf";
 import PdfRenderer from "../pdfRenderer/pdfRenderer";
 import icon from "./add-icon.png";
+import { getUserInfo } from "../../services/services";
+import { useNavigate } from "react-router-dom";
+import appContext from "../../context/appContext";
 
 export default () => {
   const [files, setFiles] = useState([]);
   const inputRef = useRef();
+  const navigate = useNavigate();
+  const context = useContext(appContext);
+
+  useEffect(() => {
+    validateUser();
+  }, []);
+
+  const validateUser = async () => {
+    if (!context.data.login) {
+      context?.setPrev("/editor");
+      navigate("/login");
+    } else {
+      context?.clearPrev();
+    }
+  };
 
   const addFile = () => {
     inputRef.current.click();
@@ -20,7 +38,7 @@ export default () => {
     const file = e.target.files[0];
     const data = {};
     const reader = new FileReader();
-
+    data["fileObj"] = file;
     if (file.type?.includes("pdf")) {
       data["type"] = "pdf";
     }

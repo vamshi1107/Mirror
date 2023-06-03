@@ -12,7 +12,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 export default (props) => {
   const [numPages, setNumPages] = useState(0);
-  const [pageNumber, setPageNumber] = useState(1);
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
@@ -25,9 +24,11 @@ export default (props) => {
         onLoadSuccess={onDocumentLoadSuccess}
         style={{ width: "100" }}
       >
-        {Object.keys([...new Array(numPages)]).map((e) => (
-          <Page pageNumber={pageNumber} className={styles.page} />
-        ))}
+        {Object.keys([...new Array(numPages)])
+          .map((e) => parseInt(e) + 1)
+          .map((e) => (
+            <Page pageNumber={e} className={styles.page} />
+          ))}
       </Document>
     </div>
   );

@@ -1,0 +1,33 @@
+.projectPage {
+  display: grid;
+  gap: 20px;
+  margin: auto;
+}
+
+@media screen and (min-width: 1160px) {
+  .projectPage {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 90%;
+  }
+}
+
+@media screen and (max-width: 1159px) and (min-width: 768px) {
+  .projectPage {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 85%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .projectPage {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.project {
+  width: 100%;
+  height: 300px;
+  background-color: white;
+  border-radius: 5px;
+  border: 0.1px solid grey;
+}

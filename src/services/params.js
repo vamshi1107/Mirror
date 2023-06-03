@@ -3,4 +3,5 @@ export class AppParams {
   static userLink = "users";
   static databaseID = "646761c1b754ebe0992e";
   static usersCollectionID = "64677389b0bf64516654";
+  static projectsCollectionID = "647b445603a677a7043b";
 }

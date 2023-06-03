@@ -1,3 +1,4 @@
+import { Query } from "appwrite";
 import { account } from "../api/app-accounts";
 import { database } from "../api/app-database";
 import { AppParams } from "./params";
@@ -60,6 +61,33 @@ export const logoutUser = async () => {
     return res;
   } catch (err) {
     console.log(err);
+    return { error: true, errmsg: err.message };
+  }
+};
+
+export const addProject = async (project) => {
+  try {
+    const res = database.createDocument(
+      AppParams.databaseID,
+      AppParams.projectsCollectionID,
+      ID(),
+      project
+    );
+    return res;
+  } catch (err) {
+    return { error: true, errmsg: err.message };
+  }
+};
+
+export const getProjectsByUserId = async (userID) => {
+  try {
+    const res = database.listDocuments(
+      AppParams.databaseID,
+      AppParams.projectsCollectionID,
+      [Query.equal("user", [userID])]
+    );
+    return res;
+  } catch (err) {
     return { error: true, errmsg: err.message };
   }
 };

@@ -11,29 +11,27 @@
   .sub-page {
     display: flex;
   }
-}
-
-@media screen and (max-width: 1159px) {
-  .sub-page {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-@media screen and (min-width: 1200px) {
   .account-card {
     width: 25vw;
     min-width: 300px;
     height: 70vh;
     background-color: white;
-    margin-top: -15vh;
-    margin-left: 5vw;
+    margin-top: -20vh;
+    margin-left: 3vw;
     border: 0.5px solid grey;
-    border-radius: 2px;
+    border-radius: 4px;
+  }
+  .projects-con {
+    margin-right: 3vw;
   }
 }
 
-@media screen and (max-width: 1159px) {
+@media screen and (max-width: 1199px) {
+  .sub-page {
+    display: flex;
+    flex-direction: column;
+  }
+
   .account-card {
     width: 100vw;
     height: 20vh;
@@ -44,4 +42,5 @@
 .projects-con {
   flex: 1;
   height: 150vh;
+  padding: 30px 20px;
 }

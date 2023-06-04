@@ -38,15 +38,13 @@
 
 .contentCon {
   flex: 1;
-  margin-top: 60px;
   display: flex;
   justify-content: flex-end;
 }
 
 .content {
   width: 95%;
-  min-height: 50vh;
-  background-color: white;
+  min-height: 20vh;
 }
 
 .close {
@@ -54,4 +52,8 @@
   height: 10px;
   fill: #fff;
   position: relative;
+}
+
+.bgWhite {
+  background-color: white;
 }

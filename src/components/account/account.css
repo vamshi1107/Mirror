@@ -7,6 +7,7 @@
     rgb(66, 160, 243) 200px
   );
 }
+
 @media screen and (min-width: 1200px) {
   .sub-page {
     display: flex;
@@ -18,8 +19,9 @@
     background-color: white;
     margin-top: -20vh;
     margin-left: 3vw;
-    border: 0.5px solid grey;
+    border: 0.1px solid rgb(128, 127, 127);
     border-radius: 4px;
+    box-shadow: 0 3px 3px rgba(25, 25, 25, 0.1);
   }
   .projects-con {
     margin-right: 3vw;

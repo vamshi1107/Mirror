@@ -10,6 +10,7 @@ import Modal from "../modal/modal";
 import Editor from "../editor/editor";
 import { useNavigate } from "react-router-dom";
 import ProjectRenderer from "../projectRenderer/projectRenderer";
+import { Chip } from "@mui/material";
 
 export default ({ id }) => {
   const context = useContext(appContext);
@@ -75,7 +76,7 @@ export default ({ id }) => {
     <div className={styles.projectPage}>
       {isUser() && (
         <div className={styles.project} onClick={addProject}>
-          Add Project
+          <div className={styles.createLabel}>Create project</div>
         </div>
       )}
       {projects.map((p, i) => (
@@ -88,7 +89,13 @@ export default ({ id }) => {
         </div>
       ))}
       {showModal && (
-        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <Modal
+          isOpen={showModal}
+          default={true}
+          showBg={false}
+          showClose={true}
+          onClose={() => setShowModal(false)}
+        >
           <ProjectRenderer project={selected}></ProjectRenderer>
         </Modal>
       )}

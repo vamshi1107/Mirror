@@ -9,7 +9,7 @@
   overflow: auto;
   position: fixed;
   background: rgba(0, 0, 0, 0.9);
-  z-index: 9999;
+  z-index: 999999;
 }
 
 .head {
@@ -25,8 +25,8 @@
 }
 
 .closeCon {
-  width: 40px;
-  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   background-color: black;
   border-radius: 50%;
   display: flex;

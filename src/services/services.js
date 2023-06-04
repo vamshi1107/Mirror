@@ -3,6 +3,7 @@ import { account } from "../api/app-accounts";
 import { database } from "../api/app-database";
 import { AppParams } from "./params";
 import { v4 as ID } from "uuid";
+import { storage } from "../api/app-storage";
 
 export const addUser = async (user) => {
   try {
@@ -86,6 +87,33 @@ export const getProjectsByUserId = async (userID) => {
       AppParams.projectsCollectionID,
       [Query.equal("user", [userID])]
     );
+    return res;
+  } catch (err) {
+    return { error: true, errmsg: err.message };
+  }
+};
+
+export const storeFile = async (file) => {
+  try {
+    const res = storage.createFile(AppParams.filesBucketID, ID(), file);
+    return res;
+  } catch (err) {
+    return { error: true, errmsg: err.message };
+  }
+};
+
+export const retreiveFile = async (fileId) => {
+  try {
+    const res = storage.getFile(AppParams.filesBucketID, fileId);
+    return res;
+  } catch (err) {
+    return { error: true, errmsg: err.message };
+  }
+};
+
+export const previewFile = async (fileId) => {
+  try {
+    const res = storage.getFileView(AppParams.filesBucketID, fileId);
     return res;
   } catch (err) {
     return { error: true, errmsg: err.message };

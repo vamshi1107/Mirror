@@ -5,10 +5,7 @@ import styles from "./pdfRenderer.module.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.js",
-  import.meta.url
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
 
 export default (props) => {
   const [numPages, setNumPages] = useState(0);

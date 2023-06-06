@@ -37,6 +37,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .project img {
@@ -62,4 +63,18 @@
 
 .createLabel:hover {
   background-color: white;
+}
+
+.project:hover .shadow {
+  display: block;
+}
+
+.shadow {
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 9999;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.2);
+  inset: 0;
+  display: none;
 }

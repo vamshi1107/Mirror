@@ -86,6 +86,7 @@ export default ({ id }) => {
           onClick={(e) => showProject(e, p)}
         >
           <img src={p?.cover} className={styles.cover} />
+          <div className={styles.shadow}></div>
         </div>
       ))}
       {showModal && (

@@ -148,3 +148,45 @@ export const getDetailsByUserId = async (userID) => {
     return { error: true, errmsg: err.message };
   }
 };
+
+export const addDetail = async (detail) => {
+  try {
+    const res = database.createDocument(
+      AppParams.databaseID,
+      AppParams.detailsCollectionID,
+      ID(),
+      detail
+    );
+    return res;
+  } catch (err) {
+    return { error: true, errmsg: err.message };
+  }
+};
+
+export const updateDetail = async (id, detail) => {
+  try {
+    const res = database.updateDocument(
+      AppParams.databaseID,
+      AppParams.detailsCollectionID,
+      id,
+      detail
+    );
+    return res;
+  } catch (err) {
+    return { error: true, errmsg: err.message };
+  }
+};
+
+export const updateProfile = async (id, user) => {
+  try {
+    const res = database.updateDocument(
+      AppParams.databaseID,
+      AppParams.usersCollectionID,
+      id,
+      user
+    );
+    return res;
+  } catch (err) {
+    return { error: true, errmsg: err.message };
+  }
+};

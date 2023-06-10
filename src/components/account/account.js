@@ -18,7 +18,6 @@ export default () => {
   const getDetails = async () => {
     const details = await getUser(id);
     if (Object.keys(details).length > 0) {
-      console.log(details);
       setUser(details);
     }
   };

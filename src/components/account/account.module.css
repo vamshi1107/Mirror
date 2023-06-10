@@ -85,6 +85,7 @@
   .accountCard {
     width: 25vw;
     min-width: 300px;
+    min-height: 60vh;
     height: 70vh;
     background-color: white;
     margin-top: -20vh;
@@ -109,6 +110,8 @@
 
   .accountCard {
     width: 100vw;
+    min-height: 20%;
+    height: 20%;
     background-color: white;
   }
 
@@ -132,7 +135,14 @@
 .username {
   width: 100%;
   text-align: center;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: bolder;
   padding: 10px 0px;
+  font-family: "Roboto", sans-serif;
+}
+
+.bio {
+  width: 90%;
+  margin: 20px auto;
+  text-align: center;
 }

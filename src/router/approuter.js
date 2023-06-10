@@ -14,6 +14,10 @@ const getRoutes = (islogged) => [
     element: <Signup />,
   },
   {
+    path: "",
+    element: <Navigate to={"/login"}/>,
+  },
+  {
     path: "/:id",
     element: <Account />,
   },

@@ -3,14 +3,17 @@ import styles from "./about.module.css";
 import icon from "../../assets/add-icon.png";
 import AddIcon from "@mui/icons-material/Add";
 import { useState, useEffect, useContext } from "react";
-import { getDetailsByUserId } from "../../services/services";
+import * as Services from "../../services/services";
 import appContext from "../../context/appContext";
+import Modal from "../modal/modal";
 
 export default ({ id, user }) => {
   const [editable, setEditable] = useState(false);
   const [details, setDetails] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
   const context = useContext(appContext);
+  const [mainDetails, setMainDetails] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     loadDetails();
@@ -18,10 +21,14 @@ export default ({ id, user }) => {
   }, [id]);
 
   const loadDetails = async () => {
-    // const res = await getDetailsByUserId(id);
-    // if (!res?.error) {
-    //   setDetails(res.documents);
-    // }
+    const res = await Services.getDetailsByUserId(id);
+    if (!res?.error) {
+      setDetails(res.documents);
+      setMainDetails({
+        name: user?.name,
+        bio: user?.bio,
+      });
+    }
   };
 
   const isUser = () => {
@@ -30,7 +37,10 @@ export default ({ id, user }) => {
   };
 
   const addDetail = () => {
-    setDetails([...details, { label: "", content: "", status: "new" }]);
+    setDetails([
+      ...details,
+      { label: "", content: "", status: "new", user: id },
+    ]);
   };
 
   const copy = (d) => JSON.parse(JSON.stringify(d));
@@ -41,8 +51,48 @@ export default ({ id, user }) => {
     setDetails([...d]);
   };
 
+  const onMainChange = (e, key) => {
+    let d = copy(mainDetails);
+    d = { ...d, [key]: e.target.value };
+    setMainDetails({ ...d });
+  };
+
   const changeEditing = (e) => {
     setEditable(e.target.checked);
+  };
+
+  const createDetails = (ds) => {
+    return Promise.all(
+      ds
+        .filter((d) => d?.status == "new")
+        .filter((d) => d?.label.length > 0 && d?.content.length > 0)
+        .map((m) => ({ label: m?.label, content: m?.content, user: id }))
+        .map(async (i) => await Services.addDetail(i))
+    );
+  };
+
+  const updateDetails = (ds) => {
+    console.log(ds);
+    return Promise.all(
+      ds
+        .filter((d) => d?.status != "new")
+        .map((m) => ({
+          id: m?.$id,
+          data: { label: m?.label, content: m?.content, user: id },
+        }))
+        .map(async (i) => await Services.updateDetail(i?.id, i?.data))
+    );
+  };
+
+  const saveDetails = async (e) => {
+    setIsLoading(true);
+    const cres = await createDetails(details);
+    const ures = await updateDetails(details);
+    console.log(mainDetails);
+    const res = await Services.updateProfile(user?.$id, mainDetails);
+    if (!res.error) {
+      window.location.reload();
+    }
   };
 
   const renderInputField = (detail, index) => (
@@ -102,6 +152,7 @@ export default ({ id, user }) => {
               className={styles.detailContent}
               variant="standard"
               value={user?.name}
+              onChange={(e) => onMainChange(e, "name")}
             />
           </div>
           <div className={styles.detailCon}>
@@ -115,9 +166,22 @@ export default ({ id, user }) => {
               className={styles.detailContent}
               variant="standard"
               value={user?.bio}
+              onChange={(e) => onMainChange(e, "bio")}
             />
           </div>
           {details.map((d, i) => renderInputField(d, i))}
+        </div>
+      )}
+      {editable && (
+        <div className={styles.saveButon}>
+          <Button
+            variant="contained"
+            onClick={(e) => {
+              saveDetails(e);
+            }}
+          >
+            Save
+          </Button>
         </div>
       )}
       {!editable && (
@@ -126,6 +190,20 @@ export default ({ id, user }) => {
           {renderDisplayField({ label: "Bio", content: user?.bio })}
           {details.map((d) => renderDisplayField(d))}
         </div>
+      )}
+      {isLoading && (
+        <Modal showClose={false} default={true}>
+          <div className={styles.loading}>
+            <lottie-player
+              src="https://assets2.lottiefiles.com/packages/lf20_fityEfMraU.json"
+              background="transparent"
+              speed="1"
+              style={{ width: "200px", height: "200px" }}
+              loop
+              autoplay
+            ></lottie-player>
+          </div>
+        </Modal>
       )}
     </div>
   );

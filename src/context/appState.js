@@ -27,7 +27,7 @@ const AppState = (props) => {
     updateStorage({ ...up, prev: prev });
   };
 
-  const clearPrev = (prev) => {
+  const clearPrev = () => {
     let up = syncStorage();
     setData({ ...up, prev: "" });
     updateStorage({ ...up, prev: "" });

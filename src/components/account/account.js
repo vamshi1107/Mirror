@@ -18,6 +18,7 @@ export default () => {
   const getDetails = async () => {
     const details = await getUser(id);
     if (Object.keys(details).length > 0) {
+      console.log(details);
       setUser(details);
     }
   };
@@ -33,6 +34,7 @@ export default () => {
               <div className={styles.avatarImg}></div>
             </div>
             <div className={styles.username}>{user?.name}</div>
+            <div className={styles.bio}>{user?.bio}</div>
           </div>
           <div className={styles.sidePane}>
             <div className={styles.sideHeader}>
@@ -60,7 +62,7 @@ export default () => {
             )}
             {tab == 1 && (
               <div className={styles.projectsCon}>
-                <About id={id}></About>
+                <About id={id} user={user}></About>
               </div>
             )}
           </div>

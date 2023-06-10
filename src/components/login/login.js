@@ -17,10 +17,12 @@ const Login = () => {
   const verify = () => {
     if (context.data.login) {
       const c = context?.data?.prev;
+      const id = context?.data?.info?.$id;
       if (c != "") {
         navigate(c);
+        context?.clearPrev();
       } else {
-        navigate("/");
+        navigate("/" + id);
       }
     }
   };
@@ -33,7 +35,7 @@ const Login = () => {
       const data = context.data;
       const info = await Services.getUserInfo();
       context.updateData({ ...data, login: true, info: info });
-      navigate("/");
+      navigate("/" + info?.$id);
     }
   };
 

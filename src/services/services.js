@@ -135,3 +135,16 @@ export const previewFile = async (fileId) => {
     return { error: true, errmsg: err.message };
   }
 };
+
+export const getDetailsByUserId = async (userID) => {
+  try {
+    const res = database.listDocuments(
+      AppParams.databaseID,
+      AppParams.detailsCollectionID,
+      [Query.equal("user", userID)]
+    );
+    return res;
+  } catch (err) {
+    return { error: true, errmsg: err.message };
+  }
+};

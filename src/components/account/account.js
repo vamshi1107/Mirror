@@ -2,12 +2,25 @@ import { useParams } from "react-router-dom";
 import Header from "../header/header";
 import styles from "./account.module.css";
 import Projects from "../projects/projects";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import About from "../about/about";
+import { getUser } from "../../services/services";
 
 export default () => {
   const { id } = useParams();
   const [tab, setTab] = useState(0);
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    getDetails();
+  }, [id]);
+
+  const getDetails = async () => {
+    const details = await getUser(id);
+    if (Object.keys(details).length > 0) {
+      setUser(details);
+    }
+  };
 
   return (
     <>
@@ -19,6 +32,7 @@ export default () => {
             <div className={styles.avatar}>
               <div className={styles.avatarImg}></div>
             </div>
+            <div className={styles.username}>{user?.name}</div>
           </div>
           <div className={styles.sidePane}>
             <div className={styles.sideHeader}>

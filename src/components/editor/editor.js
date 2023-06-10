@@ -3,7 +3,7 @@ import Header from "../header/header";
 import styles from "./editor.module.css";
 import { Document, Page } from "react-pdf";
 import PdfRenderer from "../pdfRenderer/pdfRenderer";
-import icon from "./add-icon.png";
+import icon from "../../assets/add-icon.png";
 import * as Services from "../../services/services";
 import { useNavigate } from "react-router-dom";
 import appContext from "../../context/appContext";

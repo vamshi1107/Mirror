@@ -36,6 +36,22 @@ export const saveUser = async (user) => {
   }
 };
 
+export const getUser = async (username) => {
+  try {
+    const res = await database.listDocuments(
+      AppParams.databaseID,
+      AppParams.usersCollectionID,
+      [Query.equal("username", [username])]
+    );
+    if (res.total > 0) {
+      return res.documents[0];
+    }
+    return {};
+  } catch (err) {
+    return { error: true, errmsg: err.message };
+  }
+};
+
 export const loginUser = async (email, pass) => {
   try {
     const res = await account.createEmailSession(email, pass);
@@ -85,7 +101,7 @@ export const getProjectsByUserId = async (userID) => {
     const res = database.listDocuments(
       AppParams.databaseID,
       AppParams.projectsCollectionID,
-      [Query.equal("user", [userID])]
+      [Query.equal("user", userID)]
     );
     return res;
   } catch (err) {

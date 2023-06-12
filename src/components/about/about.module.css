@@ -17,10 +17,13 @@
 }
 
 .detailCon {
+  height: max-content;
   display: flex;
   justify-content: space-between;
-  height: 80px;
+  min-height: 120px;
   align-items: flex-end;
+  padding: 10px;
+  margin: 10px auto;
 }
 
 .detailLabel {
@@ -34,17 +37,19 @@
   margin-left: 5px !important;
   margin-right: 5px !important;
   font-weight: 300;
+  height: 100%;
 }
 
 .displayField {
   width: 90%;
-  height: 50px;
+  min-height: 70px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   margin: 10px auto;
   padding: 5px;
   font-size: 18px;
+  border-bottom: 0.1px solid grey;
 }
 
 .displayFieldLabel {
@@ -61,6 +66,8 @@
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
+  font-size: 17px;
 }
 
 .switch {

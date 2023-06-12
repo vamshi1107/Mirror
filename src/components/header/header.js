@@ -37,6 +37,9 @@ const Header = (props) => {
         <div className="menu">
           {context.data.login && (
             <>
+              <a href={"/" + getUsername()}>
+                <div className="menuitem m2">Profile</div>
+              </a>
               <div className="menuitem m3" onClick={logout}>
                 Logout
               </div>

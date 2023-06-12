@@ -33,7 +33,10 @@ export default () => {
               <div className={styles.avatarImg}></div>
             </div>
             <div className={styles.username}>{user?.name}</div>
-            <div className={styles.bio}>{user?.bio}</div>
+            <div
+              className={styles.bio}
+              dangerouslySetInnerHTML={{ __html: user?.bio }}
+            ></div>
           </div>
           <div className={styles.sidePane}>
             <div className={styles.sideHeader}>

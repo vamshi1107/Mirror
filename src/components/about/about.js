@@ -2,14 +2,17 @@ import { Button, Switch, TextField } from "@mui/material";
 import styles from "./about.module.css";
 import icon from "../../assets/add-icon.png";
 import AddIcon from "@mui/icons-material/Add";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useMemo } from "react";
 import * as Services from "../../services/services";
 import appContext from "../../context/appContext";
 import Modal from "../modal/modal";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 export default ({ id, user }) => {
   const [editable, setEditable] = useState(false);
   const [details, setDetails] = useState([]);
+  const [detailsCopy, setDetailsCopy] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
   const context = useContext(appContext);
   const [mainDetails, setMainDetails] = useState({});
@@ -24,6 +27,7 @@ export default ({ id, user }) => {
     const res = await Services.getDetailsByUserId(id);
     if (!res?.error) {
       setDetails(res.documents);
+      setDetailsCopy(res.documents);
       setMainDetails({
         name: user?.name,
         bio: user?.bio,
@@ -45,15 +49,16 @@ export default ({ id, user }) => {
 
   const copy = (d) => JSON.parse(JSON.stringify(d));
 
-  const onDetailChange = (e, key, index) => {
+  const onDetailChange = (value, key, index) => {
     let d = copy(details);
-    d[index] = { ...d[index], [key]: e.target.value };
+    d[index] = { ...d[index], [key]: value.getHTML() };
     setDetails([...d]);
   };
 
-  const onMainChange = (e, key) => {
+  const onMainChange = (e, key, rich) => {
+    let value = rich ? e.getHTML() : e.target.value;
     let d = copy(mainDetails);
-    d = { ...d, [key]: e.target.value };
+    d = { ...d, [key]: value };
     setMainDetails({ ...d });
   };
 
@@ -72,7 +77,6 @@ export default ({ id, user }) => {
   };
 
   const updateDetails = (ds) => {
-    console.log(ds);
     return Promise.all(
       ds
         .filter((d) => d?.status != "new")
@@ -95,28 +99,34 @@ export default ({ id, user }) => {
     }
   };
 
-  const renderInputField = (detail, index) => (
-    <div className={styles.detailCon}>
-      <TextField
-        className={styles.detailLabel}
-        label="Label"
-        variant="standard"
-        value={detail?.label}
-        onChange={(e) => onDetailChange(e, "label", index)}
-      />
-      <TextField
-        className={styles.detailContent}
-        variant="standard"
-        value={detail?.content}
-        onChange={(e) => onDetailChange(e, "content", index)}
-      />
-    </div>
-  );
+  const renderInputField = (detail, index) => {
+    return (
+      <div className={styles.detailCon}>
+        <TextField
+          className={styles.detailLabel}
+          label="Label"
+          variant="standard"
+          value={detail?.label}
+          onChange={(e) => onDetailChange(e, "label", index)}
+        />
+        <ReactQuill
+          value={detail?.content}
+          className={styles.detailContent}
+          onChange={(content, delta, source, editor) =>
+            onDetailChange(editor, "content", index)
+          }
+        ></ReactQuill>
+      </div>
+    );
+  };
 
   const renderDisplayField = (details) => (
     <div className={styles.displayField}>
       <div className={styles.displayFieldLabel}>{details?.label}</div>
-      <div className={styles.displayFieldContent}>{details?.content}</div>
+      <div
+        className={styles.displayFieldContent}
+        dangerouslySetInnerHTML={{ __html: details?.content }}
+      ></div>
     </div>
   );
 
@@ -152,7 +162,7 @@ export default ({ id, user }) => {
               className={styles.detailContent}
               variant="standard"
               value={user?.name}
-              onChange={(e) => onMainChange(e, "name")}
+              onChange={(e) => onMainChange(e, "name", false)}
             />
           </div>
           <div className={styles.detailCon}>
@@ -162,12 +172,13 @@ export default ({ id, user }) => {
               value={"Bio"}
               contentEditable={false}
             />
-            <TextField
+            <ReactQuill
               className={styles.detailContent}
-              variant="standard"
               value={user?.bio}
-              onChange={(e) => onMainChange(e, "bio")}
-            />
+              onChange={(content, delta, source, editor) =>
+                onMainChange(editor, "bio", true)
+              }
+            ></ReactQuill>
           </div>
           {details.map((d, i) => renderInputField(d, i))}
         </div>

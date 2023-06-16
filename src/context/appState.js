@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import appContext from "./appContext";
 
 const AppState = (props) => {
-  const [data, setData] = useState({ login: false, info: {}, prev: "" });
+  const [data, setData] = useState({
+    login: false,
+    info: {},
+    prev: "",
+    editing: false,
+    avatarFile: undefined,
+  });
 
   useEffect(() => {
     syncStorage();

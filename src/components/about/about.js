@@ -49,9 +49,9 @@ export default ({ id, user }) => {
 
   const copy = (d) => JSON.parse(JSON.stringify(d));
 
-  const onDetailChange = (value, key, index) => {
+  const onDetailChange = (value, key, index, rich) => {
     let d = copy(details);
-    d[index] = { ...d[index], [key]: value.getHTML() };
+    d[index] = { ...d[index], [key]: rich ? value.getHTML() : value };
     setDetails([...d]);
   };
 
@@ -63,6 +63,7 @@ export default ({ id, user }) => {
   };
 
   const changeEditing = (e) => {
+    context?.updateData({ ...context?.data, editing: e.target.checked });
     setEditable(e.target.checked);
   };
 
@@ -72,8 +73,20 @@ export default ({ id, user }) => {
         .filter((d) => d?.status == "new")
         .filter((d) => d?.label.length > 0 && d?.content.length > 0)
         .map((m) => ({ label: m?.label, content: m?.content, user: id }))
+        .map((e) => {
+          console.log(e);
+          return e;
+        })
         .map(async (i) => await Services.addDetail(i))
     );
+  };
+
+  const validUpdate = (e) => {
+    const copy = detailsCopy.find((d) => d["$id"] == e?.id);
+    if (copy.label !== e?.data?.label || copy.content !== e?.data?.content) {
+      return true;
+    }
+    return false;
   };
 
   const updateDetails = (ds) => {
@@ -82,18 +95,45 @@ export default ({ id, user }) => {
         .filter((d) => d?.status != "new")
         .map((m) => ({
           id: m?.$id,
-          data: { label: m?.label, content: m?.content, user: id },
+          data: { label: m?.label, content: m?.content },
         }))
-        .map(async (i) => await Services.updateDetail(i?.id, i?.data))
+        .filter((e) => {
+          return validUpdate(e);
+        })
+        .map((e) => {
+          console.log(e);
+          return e;
+        })
+        .map(async (i) => await Services.updateDetail(i?.id, { ...i?.data }))
     );
+  };
+
+  const uploadFiles = async (file) => {
+    const res = await Services.storeFile(file);
+    if (res.error) {
+      return "";
+    }
+    return res?.["$id"];
   };
 
   const saveDetails = async (e) => {
     setIsLoading(true);
     const cres = await createDetails(details);
     const ures = await updateDetails(details);
-    const res = await Services.updateProfile(user?.$id, mainDetails);
+    const contextData = context?.data;
+    let payload = { ...mainDetails };
+    if (contextData?.updatedAvatar?.length > 0 && contextData?.avatarFile) {
+      const file = await uploadFiles(contextData?.avatarFile);
+      payload = { ...payload, avatar: file };
+    }
+    const res = await Services.updateProfile(user?.$id, payload);
     if (!res.error) {
+      context?.updateData({
+        ...context?.data,
+        updatedAvatar: "",
+        avatarFile: undefined,
+        editing: false,
+      });
       window.location.reload();
     }
   };
@@ -106,13 +146,15 @@ export default ({ id, user }) => {
           label="Label"
           variant="standard"
           value={detail?.label}
-          onChange={(e) => onDetailChange(e, "label", index)}
+          onChange={(e) =>
+            onDetailChange(e?.target?.value, "label", index, false)
+          }
         />
         <ReactQuill
           value={detail?.content}
           className={styles.detailContent}
           onChange={(content, delta, source, editor) =>
-            onDetailChange(editor, "content", index)
+            onDetailChange(editor, "content", index, true)
           }
         ></ReactQuill>
       </div>

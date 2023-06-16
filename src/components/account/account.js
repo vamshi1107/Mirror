@@ -2,10 +2,11 @@ import { useParams } from "react-router-dom";
 import Header from "../header/header";
 import styles from "./account.module.css";
 import Projects from "../projects/projects";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import About from "../about/about";
 import Modal from "../modal/modal";
-import { getUser } from "../../services/services";
+import { getUser, previewFile, retreiveFile } from "../../services/services";
+import appContext from "../../context/appContext";
 
 export default () => {
   const { id } = useParams();
@@ -13,10 +14,18 @@ export default () => {
   const [user, setUser] = useState([]);
   const [found, setFound] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [editingEnabled, setEditingEnabled] = useState(false);
+  const [avatarSrc, setAvatarSrc] = useState("");
+  const avatarRef = useRef(null);
+  const context = useContext(appContext);
 
   useEffect(() => {
     getDetails();
   }, [id]);
+
+  useEffect(() => {
+    setEditingEnabled(context?.data?.editing || false);
+  }, [context]);
 
   const getDetails = async () => {
     setIsLoading(true);
@@ -25,10 +34,29 @@ export default () => {
       setUser(details);
       setIsLoading(false);
       setFound(true);
+      setEditingEnabled(context?.data?.editing || false);
+      if (details?.avatar?.length > 0) {
+        let avt = await previewFile(details?.avatar);
+        setAvatarSrc(avt);
+      }
     } else {
       setFound(false);
       setIsLoading(false);
     }
+  };
+
+  const avatarChange = (e) => {
+    const file = e?.target?.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setAvatarSrc(e.target.result);
+      context?.updateData({
+        ...context?.data,
+        updatedAvatar: e.target.result,
+        avatarFile: file,
+      });
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -60,7 +88,36 @@ export default () => {
             <div className={styles.subPage}>
               <div className={styles.accountCard}>
                 <div className={styles.avatar}>
-                  <div className={styles.avatarImg}></div>
+                  <div className={styles.avatarImg}>
+                    {user?.avatar?.length > 0 ? (
+                      <div
+                        className={styles.avatarImg + " " + styles.avatarUser}
+                      >
+                        <img src={avatarSrc} />
+                      </div>
+                    ) : (
+                      <div
+                        className={
+                          styles.avatarImg + " " + styles.avatarDefault
+                        }
+                      ></div>
+                    )}
+                  </div>
+                  {editingEnabled && (
+                    <div
+                      className={styles.avatarImg + " " + styles.avatarEditing}
+                      onClick={(e) => avatarRef?.current?.click()}
+                    >
+                      Edit
+                      <input
+                        type="file"
+                        accept=".jpg, .jpeg, .png"
+                        style={{ display: "none" }}
+                        ref={avatarRef}
+                        onChange={(e) => avatarChange(e)}
+                      ></input>
+                    </div>
+                  )}
                 </div>
                 <div className={styles.username}>{user?.name}</div>
                 <div

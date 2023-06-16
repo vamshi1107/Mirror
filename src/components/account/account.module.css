@@ -68,14 +68,9 @@
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background-image: linear-gradient(
-    165deg,
-    rgb(123, 255, 0) 100px,
-    rgb(214, 66, 243) 200px,
-    rgb(66, 160, 243) 200px
-  );
-  padding: 2px;
   outline: 5px solid white;
+  position: relative;
+  overflow: hidden;
 }
 
 @media screen and (min-width: 1200px) {
@@ -117,11 +112,6 @@
 
   .avatar {
     height: max-content;
-    background-color: white;
-    padding: 2px;
-  }
-
-  .avatarImg {
     margin-top: -10%;
   }
 
@@ -169,4 +159,33 @@
   margin-top: 10%;
   user-select: none;
   cursor: pointer;
+}
+
+.avatarDefault {
+  background-image: linear-gradient(
+    165deg,
+    rgb(123, 255, 0) 100px,
+    rgb(214, 66, 243) 200px,
+    rgb(66, 160, 243) 200px
+  );
+}
+
+.avatarEditing {
+  background-color: rgba(0, 0, 0, 0.143) !important;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  user-select: none;
+  cursor: pointer;
+}
+
+.avatarEditing:hover {
+  background-color: rgba(0, 0, 0, 0.447) !important;
+  z-index: 99;
+}
+
+.avatarUser img {
+  width: 100%;
+  height: 100%;
 }

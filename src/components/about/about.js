@@ -92,7 +92,6 @@ export default ({ id, user }) => {
     setIsLoading(true);
     const cres = await createDetails(details);
     const ures = await updateDetails(details);
-    console.log(mainDetails);
     const res = await Services.updateProfile(user?.$id, mainDetails);
     if (!res.error) {
       window.location.reload();
@@ -101,7 +100,7 @@ export default ({ id, user }) => {
 
   const renderInputField = (detail, index) => {
     return (
-      <div className={styles.detailCon}>
+      <div className={styles.detailCon} key={index}>
         <TextField
           className={styles.detailLabel}
           label="Label"
@@ -152,12 +151,7 @@ export default ({ id, user }) => {
       {editable && (
         <div className={styles.editCon}>
           <div className={styles.detailCon}>
-            <TextField
-              className={styles.detailLabel}
-              variant="standard"
-              value={"Name"}
-              contentEditable={false}
-            />
+            <div className={styles.detailLabel}>Name</div>
             <TextField
               className={styles.detailContent}
               variant="standard"
@@ -166,15 +160,10 @@ export default ({ id, user }) => {
             />
           </div>
           <div className={styles.detailCon}>
-            <TextField
-              className={styles.detailLabel}
-              variant="standard"
-              value={"Bio"}
-              contentEditable={false}
-            />
+            <div className={styles.detailLabel}>Bio</div>
             <ReactQuill
               className={styles.detailContent}
-              value={user?.bio}
+              value={mainDetails?.bio}
               onChange={(content, delta, source, editor) =>
                 onMainChange(editor, "bio", true)
               }

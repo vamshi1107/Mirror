@@ -2,6 +2,8 @@
 
 Mirror is profile sharing application developed using reactjs, appwrite, material-ui
 
+https://mirror-vamshi1107.vercel.app/
+
 ## Login screen
 
 <img width="1439" alt="Screenshot 2023-06-17 at 3 46 57 AM" src="https://github.com/vamshi1107/Mirror/assets/69498031/a855e531-99fa-4775-bad1-c13b93e36188">
@@ -26,6 +28,7 @@ Mirror is profile sharing application developed using reactjs, appwrite, materia
 <br>
 
 <b>Editing enabled</b>
+
 <p> Allows user to add details and profile picture</p>
 <br>
 <img width="1439" alt="Screenshot 2023-06-17 at 3 47 46 AM" src="https://github.com/vamshi1107/Mirror/assets/69498031/3520c4d8-edb0-4080-8258-0193ed0990c7">

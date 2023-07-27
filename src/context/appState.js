@@ -15,8 +15,8 @@ const AppState = (props) => {
   }, []);
 
   const syncStorage = () => {
-    if (sessionStorage.hasOwnProperty("data")) {
-      const storage = JSON.parse(sessionStorage.getItem("data"));
+    if (localStorage.hasOwnProperty("data")) {
+      const storage = JSON.parse(localStorage.getItem("data"));
       setData({ ...storage });
       return storage;
     }
@@ -24,7 +24,7 @@ const AppState = (props) => {
   };
 
   const updateStorage = (data) => {
-    sessionStorage.setItem("data", JSON.stringify(data));
+    localStorage.setItem("data", JSON.stringify(data));
   };
 
   const setPrev = (prev) => {
